@@ -26,8 +26,8 @@ print_warning() {
 
 # Check if running as root or with sudo
 if [ "$EUID" -ne 0 ]; then
-    print_error "This script must be run as root or with sudo"
-    exit 1
+    print_warning "This script requires root privileges. Restarting with sudo (you may be prompted for your password)..."
+    exec sudo "$0" "$@"
 fi
 
 # Check for required dependencies
