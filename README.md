@@ -10,6 +10,12 @@ The repository includes an installation script for lazygit, a terminal UI for Gi
 To install lazygit on a Debian-based system:
 
 ```bash
+./install.sh
+```
+
+The script will automatically request sudo privileges if needed. You can also run it directly with sudo:
+
+```bash
 sudo ./install.sh
 ```
 
