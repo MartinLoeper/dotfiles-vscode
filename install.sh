@@ -122,4 +122,19 @@ else
     exit 1
 fi
 
-print_info "Installation complete!"
+print_info "lazygit installation complete!"
+
+# Get the directory where install.sh is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Install Claude Code CLI
+print_info "Installing Claude Code CLI..."
+if [ -f "$SCRIPT_DIR/claude-code/claude-code.sh" ]; then
+    chmod +x "$SCRIPT_DIR/claude-code/claude-code.sh"
+    "$SCRIPT_DIR/claude-code/claude-code.sh"
+else
+    print_error "Claude Code installation script not found at $SCRIPT_DIR/claude-code/claude-code.sh"
+    exit 1
+fi
+
+print_info "All installations complete!"
