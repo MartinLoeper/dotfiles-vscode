@@ -43,7 +43,18 @@ else
     exit 1
 fi
 
+# Install Node.js and npm
+print_info "Installing Node.js and npm..."
+if [ -f "$SCRIPT_DIR/packages/nodejs.sh" ]; then
+    chmod +x "$SCRIPT_DIR/packages/nodejs.sh"
+    "$SCRIPT_DIR/packages/nodejs.sh"
+else
+    print_error "Node.js installation script not found at $SCRIPT_DIR/packages/nodejs.sh"
+    exit 1
+fi
+
 # Install Claude Code CLI
+# Note: This depends on nodejs.sh above (requires npm)
 print_info "Installing Claude Code CLI..."
 if [ -f "$SCRIPT_DIR/packages/claude-code.sh" ]; then
     chmod +x "$SCRIPT_DIR/packages/claude-code.sh"
