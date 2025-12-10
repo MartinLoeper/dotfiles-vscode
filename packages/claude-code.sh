@@ -48,9 +48,9 @@ else
     print_info "You may need to restart your terminal or add npm global bin to your PATH."
 fi
 
-# Create claude-wrapper.sh in /usr/local/bin
-print_info "Creating claude-wrapper.sh..."
-WRAPPER_PATH="/usr/local/bin/claude-wrapper.sh"
+# Create claude-wrapper in /usr/local/bin
+print_info "Creating claude-wrapper..."
+WRAPPER_PATH="/bin/claude-wrapper"
 
 cat > "$WRAPPER_PATH" << 'EOF'
 #!/bin/bash
@@ -62,7 +62,7 @@ EOF
 
 # Make the wrapper script executable
 if chmod +x "$WRAPPER_PATH"; then
-    print_info "claude-wrapper.sh created and made executable at $WRAPPER_PATH"
+    print_info "claude-wrapper created and made executable at $WRAPPER_PATH"
 else
     print_error "Failed to make claude-wrapper.sh executable"
     exit 1
