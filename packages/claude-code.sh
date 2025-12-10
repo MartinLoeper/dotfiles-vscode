@@ -48,4 +48,24 @@ else
     print_info "You may need to restart your terminal or add npm global bin to your PATH."
 fi
 
+# Create claude-wrapper.sh in /usr/local/bin
+print_info "Creating claude-wrapper.sh..."
+WRAPPER_PATH="/usr/local/bin/claude-wrapper.sh"
+
+cat > "$WRAPPER_PATH" << 'EOF'
+#!/bin/bash
+# Take all arguments except the first (the original binary name)
+shift
+# Execute your desired binary instead, with all remaining args
+exec claude "$@"
+EOF
+
+# Make the wrapper script executable
+if chmod +x "$WRAPPER_PATH"; then
+    print_info "claude-wrapper.sh created and made executable at $WRAPPER_PATH"
+else
+    print_error "Failed to make claude-wrapper.sh executable"
+    exit 1
+fi
+
 print_info "Claude Code CLI installation complete!"
