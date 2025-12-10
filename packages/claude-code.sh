@@ -57,7 +57,7 @@ cat > "$WRAPPER_PATH" << 'EOF'
 # Take all arguments except the first (the original binary name)
 shift
 # Execute your desired binary instead, with all remaining args
-exec /home/mloeper/.nix-profile/bin/claude "$@"
+exec claude "$@"
 EOF
 
 # Make the wrapper script executable
