@@ -43,4 +43,4 @@ mloeper-install
 ```
 
 This interactive installer provides a user-friendly menu (powered by gum) to select and install optional packages such as:
-- **omnara** - Additional development tool
+- **omnara** - Claude Code mobile / voice interface
