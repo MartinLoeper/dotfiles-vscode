@@ -77,6 +77,37 @@ while IFS= read -r package; do
             if curl -fsSL https://omnara.com/install/install.sh | bash; then
                 SUCCESSFUL_INSTALLS+=("omnara")
                 print_info "omnara installed successfully!"
+                
+                # Add omnara to PATH
+                OMNARA_PATH_LINE='export PATH="$HOME/.omnara/bin:$PATH"'
+                
+                # Get the actual user (not root when using sudo)
+                ACTUAL_USER="${SUDO_USER:-$USER}"
+                ACTUAL_HOME=$(eval echo ~"$ACTUAL_USER")
+                
+                # Add to .bashrc if it exists and doesn't already contain the PATH entry
+                if [ -f "$ACTUAL_HOME/.bashrc" ]; then
+                    if ! grep -q '.omnara/bin' "$ACTUAL_HOME/.bashrc"; then
+                        echo "" >> "$ACTUAL_HOME/.bashrc"
+                        echo "# Added by mloeper-install for omnara" >> "$ACTUAL_HOME/.bashrc"
+                        echo "$OMNARA_PATH_LINE" >> "$ACTUAL_HOME/.bashrc"
+                        chown "$ACTUAL_USER:$ACTUAL_USER" "$ACTUAL_HOME/.bashrc"
+                        print_info "Added omnara to PATH in .bashrc"
+                    fi
+                fi
+                
+                # Add to .zshrc if it exists and doesn't already contain the PATH entry
+                if [ -f "$ACTUAL_HOME/.zshrc" ]; then
+                    if ! grep -q '.omnara/bin' "$ACTUAL_HOME/.zshrc"; then
+                        echo "" >> "$ACTUAL_HOME/.zshrc"
+                        echo "# Added by mloeper-install for omnara" >> "$ACTUAL_HOME/.zshrc"
+                        echo "$OMNARA_PATH_LINE" >> "$ACTUAL_HOME/.zshrc"
+                        chown "$ACTUAL_USER:$ACTUAL_USER" "$ACTUAL_HOME/.zshrc"
+                        print_info "Added omnara to PATH in .zshrc"
+                    fi
+                fi
+                
+                print_info "Restart your shell or run 'source ~/.bashrc' (or ~/.zshrc) to use omnara"
             else
                 print_error "Failed to install omnara"
                 FAILED_INSTALLS+=("omnara")
