@@ -81,6 +81,37 @@ else
     FAILED_PACKAGES+=("claude-code")
 fi
 
+# Install gum
+print_info "Installing gum..."
+if [ -f "$SCRIPT_DIR/packages/gum.sh" ]; then
+    chmod +x "$SCRIPT_DIR/packages/gum.sh"
+    if "$SCRIPT_DIR/packages/gum.sh"; then
+        SUCCESSFUL_PACKAGES+=("gum")
+    else
+        print_error "gum installation failed"
+        FAILED_PACKAGES+=("gum")
+    fi
+else
+    print_error "gum installation script not found at $SCRIPT_DIR/packages/gum.sh"
+    FAILED_PACKAGES+=("gum")
+fi
+
+# Install mloeper-install script to PATH
+print_info "Installing mloeper-install script..."
+if [ -f "$SCRIPT_DIR/packages/mloeper-install" ]; then
+    chmod +x "$SCRIPT_DIR/packages/mloeper-install"
+    if cp "$SCRIPT_DIR/packages/mloeper-install" /usr/local/bin/mloeper-install; then
+        SUCCESSFUL_PACKAGES+=("mloeper-install")
+        print_info "mloeper-install is now available in PATH"
+    else
+        print_error "Failed to install mloeper-install to /usr/local/bin"
+        FAILED_PACKAGES+=("mloeper-install")
+    fi
+else
+    print_error "mloeper-install script not found at $SCRIPT_DIR/packages/mloeper-install"
+    FAILED_PACKAGES+=("mloeper-install")
+fi
+
 # Print installation summary
 echo ""
 print_info "Installation Summary:"
