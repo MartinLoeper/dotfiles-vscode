@@ -2,6 +2,7 @@
 
 # gum.sh - Install gum on Debian-based systems
 # gum is a tool for glamorous shell scripts (interactive UI components)
+# Note: This script is designed for Debian-based systems using apt-get
 
 set -e
 

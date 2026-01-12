@@ -51,10 +51,10 @@ PACKAGES=(
 print_info "Select packages to install (use space to select, enter to confirm):"
 echo ""
 
-SELECTED=$(gum choose --no-limit "${PACKAGES[@]}")
+SELECTED_PACKAGES=$(gum choose --no-limit "${PACKAGES[@]}")
 
 # Check if any packages were selected
-if [ -z "$SELECTED" ]; then
+if [ -z "$SELECTED_PACKAGES" ]; then
     print_warning "No packages selected. Exiting."
     exit 0
 fi
@@ -73,6 +73,7 @@ while IFS= read -r package; do
     case "$package" in
         omnara)
             print_info "Installing omnara..."
+            # Note: This executes a remote script as required by omnara's installation method
             if curl -fsSL https://omnara.com/install/install.sh | bash; then
                 SUCCESSFUL_INSTALLS+=("omnara")
                 print_info "omnara installed successfully!"
@@ -86,7 +87,7 @@ while IFS= read -r package; do
             ;;
     esac
     echo ""
-done <<< "$SELECTED"
+done <<< "$SELECTED_PACKAGES"
 
 # Print installation summary
 echo ""
